@@ -14,7 +14,8 @@
 ## 环境要求
 
 - **Android 12 及以上（API 31+）**。液态玻璃面板背后的真实背景模糊用的是 `Modifier.blur`（底层 `RenderEffect`），这个能力从 Android 12 才有。
-- LSPosed（或其它支持传统 Xposed API 的框架）。本模块使用传统 Xposed API：`de.robv.android.xposed:api:82` + `xposedminversion=93`。
+- **需要框架提供 libxposed API 102**：LSPosed / Vector，或免 root 的 **NPatch** 都可以。本模块使用 libxposed Modern API（`io.github.libxposed:api:102.0.0`，`minApiVersion=102`）；框架版本不够时模块会显示为不兼容、不会加载。
+- **不支持原版 LSPatch**：它 2023-12 已停止维护，只认 legacy 模块，请改用它的继任者 NPatch。
 - 微信 **8.0.78** 上验证通过。
 
 ## 安装
@@ -24,7 +25,7 @@
 3. 回首页点「接口自检」——真发一次最小请求，确认地址 / Key / 模型都对。
 4. 到微信里打开一个聊天，顶部会出现候选回复卡片。
 
-**改配置不需要重启微信**：模块每次识别前会检查配置文件有没有被改过，改了就地重载。
+**改配置不需要重启微信**：配置改动会由框架实时推送到微信进程，模块每次识别前都读到最新的一份。
 只有「作用域」这类 LSPosed 层面的改动才需要强杀微信。
 
 ## 隐私
